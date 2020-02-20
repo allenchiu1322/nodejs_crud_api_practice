@@ -1,0 +1,3 @@
+FROM node:latest
+EXPOSE 80
+EXPOSE 3000

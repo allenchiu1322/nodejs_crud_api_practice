@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+  nodejs:
+    build: nodejs/
+    container_name: nodejs
+    tty: true
+    working_dir: /home/node/app
+    volumes:
+      - ./src:/home/node/app
+    ports:
+      - "80:80"
+      - "3000:3000"
+  db:
+    image: mysql:5
+    container_name: db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    environment:
+       MYSQL_DATABASE: main
+       MYSQL_ROOT_PASSWORD: test
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+     - PMA_ARBITRARY=1
+     - PMA_HOST=db
+     - PMA_USER=root
+     - PMA_PASSWORD=test
+    ports:
+     - 8080:80
+    volumes:
+      - /sessions
